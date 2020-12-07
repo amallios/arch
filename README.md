@@ -91,7 +91,19 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ## e. Desktop Environment (Plasma) installation
 pacman -Syu && pacman -S xorg-server plasma dolphin konsole chromium
 
-## f. Enable Services & Reboot
+## f. Further optimisation
+#### CPU Cores
+(lscpu | grep “CPU(s):” | grep -v NUMA)
+
+grep “COMPRESSXZ=(xz” /etc/makepkg.conf && sudo sed -i ‘s/COMPRESSXZ=(xz -c -z -)/COMPRESSXZ=(xz -c -T 4 -z -)/g’ /etc/makepkg.conf && grep “COMPRESSXZ=(xz” /etc/makepkg.conf
+
+#### Options to sub-MAKE
+grep “#MAKEFLAGS=\”-j” /etc/makepkg.conf && sudo sed -i ‘s/#MAKEFLAGS=”-j2"/MAKEFLAGS=”-j9"/g’ /etc/makepkg.conf $$ grep “#MAKEFLAGS=\”-j” /etc/makepkg.conf
+
+#### Colour to pacman
+grep “Color” /etc/pacman.conf && sudo sed -i -e ‘s/#Color/Color/g’ /etc/pacman.conf && grep “Color” /etc/pacman.conf
+
+## g. Enable Services & Reboot
 systemctl enable NetworkManager sddm
 
 exit
@@ -101,7 +113,7 @@ reboot
 # Part 2. Install additional packages
 
 ## a. Install Pacman Packages
-sudo pacman -Syu && sudo pacman -S ark audacity bluez-utils cmatrix  geogebra gimp git gpicview htop hunspell jdk-openjdk jre-openjdk kcron kdesdk-thumbnailers kdegraphics-thumbnailers ktorrent libreoffice libreoffice-extension-texmaths lynx man-db man-pages mplayer neofetch okular openssh pdfarranger postgresql pulseaudio-alsa pulseaudio-bluetooth pydf reflector spectacle speedtest-cli thunderbird tor virtualbox vlc wget youtube-dl
+sudo pacman -Syu && sudo pacman -S ark audacity bluez-utils cmatrix docker geogebra gimp git gpicview htop hunspell jdk-openjdk jre-openjdk kcron kdesdk-thumbnailers kdegraphics-thumbnailers ktorrent libreoffice libreoffice-extension-texmaths lynx man-db man-pages mplayer neofetch okular openssh pdfarranger postgresql pulseaudio-alsa pulseaudio-bluetooth pydf reflector spectacle speedtest-cli thunderbird tor virtualbox vlc wget youtube-dl
 
 ## b. Generate OpenPGP certificate & fetch keys
 gpg --full-gen-key
@@ -109,7 +121,7 @@ gpg --full-gen-key
 gpg --keyserver pool.sks-keyservers.net --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E 1D0B09AD6C93FEE93FDDBD9DAFF2A1415F6A3A38 8FD3D9A8D3800305A9FFF259D1742AD60D811D58 EF6E286DDA85EA2A4BA7DE684E2C6E8793298290
 
 ## c. Make Yay and install AUR packages
-git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -sic && cd .. && rm -rf yay
+git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -sic && cd .. && rm -rf yay && yay - editmenu - nodiffmenu - save
 
 https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh
 
@@ -146,6 +158,6 @@ expressvpn activate
 ## e. RealVNC
 
 ## f. Enable Services & Reboot
-systemctl enable bluetooth expressvpn postgresql.service
+systemctl enable bluetooth docker expressvpn postgresql.service 
 
 reboot
