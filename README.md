@@ -1,4 +1,4 @@
-##### updated for (2020.12.01) ISO on ASUS-U36SG: #UEFI #GPT #GRUB #KDE #Plasma
+##### updated for (2021.01) ISO on ASUS-U36SG: #UEFI #GPT #GRUB #KDE #Plasma
 
 # Part 1. Arch Linux Installation
 
@@ -24,21 +24,15 @@ timedatectl status
 ## b. Partition and mount drives
 fdisk /dev/sda (create new empty GPT partition table)
 
-cfdisk (sda1: type=efi, size=550M; sda2: type=linux, size=50G; sda3: type=linux, size=150G; sda4: type=swap, size=32GB)
+cfdisk (sda1: type=efi, size=550M; sda2: type=linux, size=200G; sda3: type=swap, size=32G)
 
-mkswap /dev/sda4
+mkswap /dev/sda3
 
-swapon /dev/sda4
+swapon /dev/sda3
 
 mkfs.ext4 /dev/sda2
 
 mount /dev/sda2 /mnt
-
-mkfs.ext4 /dev/sda3
-
-mkdir /mnt/home
-
-mount /dev/sda3 /mnt/home
 
 mkfs.fat -F32 /dev/sda1
 
@@ -118,14 +112,10 @@ sudo pacman -Syu && sudo pacman -S ark audacity bluez-utils cmatrix docker geoge
 ## b. Generate OpenPGP certificate & fetch keys
 gpg --full-gen-key
 
-gpg --keyserver pool.sks-keyservers.net --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E 1D0B09AD6C93FEE93FDDBD9DAFF2A1415F6A3A38 8FD3D9A8D3800305A9FFF259D1742AD60D811D58 EF6E286DDA85EA2A4BA7DE684E2C6E8793298290
-
 ## c. Make Yay and install AUR packages
-git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -sic && cd .. && rm -rf yay && yay - editmenu - nodiffmenu - save
+git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -sic && cd .. && rm -rf yay
 
-https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh
-
-yay -Syu && yay -S balena-etcher datagrip datagrip-jre dropbox exfat-utils-nofuse expressvpn ifuse nvidia-390xx-dkms pycharm-professional realvnc-vnc-server realvnc-vnc-viewer slack-desktop spotify sublime-text-dev tor-browser webstorm whatsapp-nativefier zoom
+yay -Syu && yay -S balena-etcher datagrip datagrip-jre dropbox exfat-utils-nofuse expressvpn google-chrome ifuse nvidia-390xx-dkms pycharm-professional realvnc-vnc-server realvnc-vnc-viewer slack-desktop spotify sublime-text-dev tor-browser webstorm whatsapp-nativefier zoom
 
 ## d. Install Anaconda & Exit
 wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh && sh Anaconda3-2020.11-Linux-x86_64.sh && rm Anaconda3-2020.11-Linux-x86_64.sh
@@ -135,7 +125,7 @@ exit
 # Part 3. Server Configurations
 
 ## a. Samba
-smb://pi@192.168.195.241/HDD/
+smb://pi@192.168.195.137/share
 
 ## b. Postgresql
 sudo -iu postgres
@@ -155,9 +145,7 @@ expressvpn activate
 
 ## d. Dropbox
 
-## e. RealVNC
-
-## f. Enable Services & Reboot
+## e. Enable Services & Reboot
 systemctl enable bluetooth docker expressvpn postgresql.service 
 
 reboot
