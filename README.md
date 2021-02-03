@@ -1,4 +1,4 @@
-##### updated for (2021.01) ISO on ASUS-U36SG: #UEFI #GPT #GRUB #KDE #Plasma
+##### updated for (2021.02) ISO on ASUS-U36SG: #UEFI #GPT #GRUB #KDE #Plasma
 
 # Part 1. Arch Linux Installation
 
@@ -107,7 +107,7 @@ reboot
 # Part 2. Install additional packages
 
 ## a. Install Pacman Packages
-sudo pacman -Syu && sudo pacman -S ark audacity bluez-utils cmatrix docker geogebra gimp git gpicview htop hunspell jdk-openjdk jre-openjdk kcron kdesdk-thumbnailers kdegraphics-thumbnailers ktorrent libreoffice libreoffice-extension-texmaths lynx man-db man-pages mplayer neofetch okular openssh pdfarranger postgresql pulseaudio-alsa pulseaudio-bluetooth pydf reflector spectacle speedtest-cli thunderbird tor virtualbox vlc wget youtube-dl
+sudo pacman -Syu && sudo pacman -S ark bluez-utils cmatrix geogebra gimp git gpicview htop hunspell jdk-openjdk jre-openjdk kcron kdesdk-thumbnailers kdegraphics-thumbnailers ktorrent libreoffice lynx man-db man-pages mplayer neofetch okular openssh pdfarranger postgresql pulseaudio-alsa pulseaudio-bluetooth pydf reflector spectacle speedtest-cli thunderbird tor virtualbox vlc wget youtube-dl
 
 ## b. Generate OpenPGP certificate & fetch keys
 gpg --full-gen-key
@@ -115,7 +115,7 @@ gpg --full-gen-key
 ## c. Make Yay and install AUR packages
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -sic && cd .. && rm -rf yay
 
-yay -Syu && yay -S balena-etcher datagrip datagrip-jre dropbox exfat-utils-nofuse expressvpn google-chrome ifuse nvidia-390xx-dkms pycharm-professional realvnc-vnc-server realvnc-vnc-viewer slack-desktop spotify sublime-text-dev tor-browser webstorm whatsapp-nativefier zoom
+yay -Syu && yay -S balena-etcher datagrip datagrip-jre dropbox exfat-utils-nofuse expressvpn google-chrome ifuse nordvpn-bin nvidia-390xx-dkms pycharm-professional realvnc-vnc-server realvnc-vnc-viewer slack-desktop spotify sublime-text-dev tor-browser webstorm whatsapp-nativefier zoom
 
 ## d. Install Anaconda & Exit
 wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh && sh Anaconda3-2020.11-Linux-x86_64.sh && rm Anaconda3-2020.11-Linux-x86_64.sh
@@ -125,7 +125,7 @@ exit
 # Part 3. Server Configurations
 
 ## a. Samba
-smb://pi@192.168.195.137/share
+smb://pi@192.168.195.136/share
 
 ## b. Postgresql
 sudo -iu postgres
@@ -138,14 +138,14 @@ createuser --interactive USERNAME
 
 exit
 
-## c. Expressvpn
-systemctl start expressvpn
-
-expressvpn activate
+## c. NordVPN
+sudo gpasswd -a USERNAME nordvpn
+sudo systemctl enable --now nordvpn
+nordvpn login
 
 ## d. Dropbox
 
 ## e. Enable Services & Reboot
-systemctl enable bluetooth docker expressvpn postgresql.service 
+systemctl enable bluetooth postgresql.service 
 
 reboot
