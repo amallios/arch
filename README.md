@@ -115,7 +115,7 @@ gpg --full-gen-key
 ## c. Make Yay and install AUR packages
 git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -sic && cd .. && rm -rf yay
 
-yay -Syu && yay -S balena-etcher datagrip datagrip-jre dropbox exfat-utils-nofuse expressvpn google-chrome ifuse nordvpn-bin nvidia-390xx-dkms pycharm-professional realvnc-vnc-server realvnc-vnc-viewer slack-desktop spotify sublime-text-dev tor-browser webstorm whatsapp-nativefier zoom
+yay -Syu && yay -S atom balena-etcher datagrip datagrip-jre dropbox exfat-utils-nofuse expressvpn google-chrome ifuse nordvpn-bin nvidia-390xx-dkms pycharm-professional realvnc-vnc-server realvnc-vnc-viewer slack-desktop spotify tor-browser webstorm whatsapp-nativefier zoom
 
 ## d. Install Anaconda & Exit
 wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh && sh Anaconda3-2020.11-Linux-x86_64.sh && rm Anaconda3-2020.11-Linux-x86_64.sh
