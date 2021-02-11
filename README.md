@@ -140,7 +140,9 @@ exit
 
 ## c. NordVPN
 sudo gpasswd -a USERNAME nordvpn
+
 sudo systemctl enable --now nordvpn
+
 nordvpn login
 
 ## d. Dropbox
