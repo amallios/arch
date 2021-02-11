@@ -139,9 +139,11 @@ createuser --interactive USERNAME
 exit
 
 ## c. NordVPN
+sudo groupadd -r nordvpn
+
 sudo gpasswd -a USERNAME nordvpn
 
-sudo systemctl enable --now nordvpn
+sudo systemctl enable --now nordvpnd
 
 nordvpn login
 
